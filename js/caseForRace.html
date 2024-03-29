@@ -1,0 +1,31 @@
+<script>
+
+// cases to handle:
+// 1. Good fetch/data
+// 2. Bad fetch
+// 3. Timeout
+//a promise is in fetchReq
+const fetchReq = fetch('https://service.goodmorningdevelopers.com/promise-fetch')
+const timeoutP = new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+        reject('timeout')
+    },5000)
+})
+
+// make an array of our 2 promises
+const promises = [fetchReq, timeoutP]
+//race takes an iterable and runs then or catch as soon
+// as ANY promise settles
+Promise.race(promises).then(r=>{
+    console.log(r)
+    alert("Data received")
+}).catch(r=>{
+    if(r === "timeout"){
+        alert("Server took to long. Try back later")
+    }else{
+        alert("Bad fetch")
+    }
+})
+
+
+</script>
